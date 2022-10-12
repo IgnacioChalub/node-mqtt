@@ -33,7 +33,7 @@ client.on('message', function (topic, message) {
 client.subscribe('environment-data');
 
 // publish message 'Hello' to topic 'my/test/topic'
-client.publish('environment-data', 'Hello');
+// client.publish('environment-data', 'Hello');
 
 
 const express = require('express')
