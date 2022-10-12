@@ -21,15 +21,29 @@ client.on('error', function (error) {
     console.log(error);
 });
 
+var lastMessage = "";
+
 client.on('message', function (topic, message) {
     // called each time a message is received
-    const obj = JSON.parse(message.toString());
-    console.log('Received message:', topic);
-    console.log(obj)
+    lastMessage = message.toString();
+    console.log('Received message:', topic, message.toString());
 });
 
 // subscribe to topic 'my/test/topic'
 client.subscribe('environment-data');
 
 // publish message 'Hello' to topic 'my/test/topic'
-client.publish('my/test/topic', 'Hello');
+client.publish('environment-data', 'Hello');
+
+
+const express = require('express')
+const app = express()
+const port = 8080
+
+app.get('/', (req, res) => {
+  res.send(lastMessage)
+})
+
+app.listen(port, () => {
+  console.log(`App listening on port ${port}`)
+})
