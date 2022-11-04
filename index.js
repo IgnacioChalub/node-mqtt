@@ -27,10 +27,21 @@ client.on('message', function (topic, message) {
     // called each time a message is received
     lastMessage = message.toString();
     console.log('Received message:', topic, message.toString());
+    try {
+        let data = JSON.parse(lastMessage);
+        console.log(data)
+        console.log(data.humedad)
+        console.log(data.temperaturaCelsius)
+        console.log(data.temperaturaFarenheit)
+    } catch (e) {
+        console.log(e.message)
+    }
+    //publish message to microcontroller
+    client.publish('environment-data-micro', 'something')
 });
 
 // subscribe to topic 'my/test/topic'
-client.subscribe('environment-data');
+client.subscribe('environment-data-server');
 
 // publish message 'Hello' to topic 'my/test/topic'
 // client.publish('environment-data', 'Hello');
